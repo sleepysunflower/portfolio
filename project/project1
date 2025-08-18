@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flood Impact Prediction in the Mono River Basin</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <main class="page">
+    <a class="back-link" href="../index.html">← Back to Portfolio</a>
+    <p class="small">Static GIS Portfolio</p>
+    <h1>🌍 Flood Impact Prediction in the Mono River Basin</h1>
+
+    <h2>1. Introduction</h2>
+    <p>
+      Flooding remains one of the most destructive natural hazards in West Africa, with impacts expected to intensify under climate change. 
+      This project explores retrospective flood risk analysis in the Mono River Basin using satellite-derived rainfall and terrain data. 
+      By simulating runoff and water accumulation using a volume comparison method, this project identifies areas historically vulnerable to flooding 
+      and evaluates how infrastructure and population may be affected.
+    </p>
+    <p class="callout">
+      Although this analysis is based on historical rainfall, the workflow is designed as a foundation for future predictive tools. 
+      With real-time rainfall input or climate projections, this method can be extended into an early warning or planning system.
+    </p>
+
+    <h2>2. Data Sources</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Data Type</th>
+          <th>Description</th>
+          <th>Source</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>DEM</td><td>Elevation data for hydrological analysis</td><td>HydroSHEDS</td></tr>
+        <tr><td>Watershed &amp; Rivers</td><td>Basin boundaries and stream networks</td><td>HydroBASINS &amp; HydroRIVERS</td></tr>
+        <tr><td>Land Cover</td><td>Land use classification</td><td>ESA WorldCover</td></tr>
+        <tr><td>Rainfall</td><td>Monthly rainfall (mm)</td><td>PERSIANN</td></tr>
+        <tr><td>Runoff Coefficient</td><td>Pre-calculated raster for land use types</td><td>Derived from land cover</td></tr>
+        <tr><td>Buildings</td><td>Vector data of structures</td><td>OpenStreetMap (filtered)</td></tr>
+        <tr><td>Population</td><td>Gridded population raster</td><td>WorldPop</td></tr>
+      </tbody>
+    </table>
+    <p>All data were clipped and projected to the basin extent.</p>
+
+    <h2>3. Methods &amp; Tools Used</h2>
+    <h3>🔧 Tools</h3>
+    <ul>
+      <li>QGIS: spatial preprocessing, watershed delineation, map generation</li>
+      <li>Python (Rasterio, NumPy): rainfall–runoff simulation, volume comparison method</li>
+      <li>Leaflet (planned): static web map for portfolio hosting</li>
+      <li>Hugging Face / Gradio: attempted deployment for interactive prediction (later abandoned due to resource limits)</li>
+    </ul>
+
+    <h3>🌀 Hydrological Modeling Workflow</h3>
+    <ol>
+      <li>
+        <strong>Runoff Simulation:</strong> <em>Q = P × C</em><br />
+        Monthly rainfall raster <em>P</em> multiplied by runoff coefficient raster <em>C</em> to get runoff depth.
+      </li>
+      <li>
+        <strong>Volume Comparison Method:</strong><br />
+        Estimate water volume per pixel; compare against terrain storage capacity derived from DEM. 
+        Pixels where runoff exceeds terrain capacity are flagged as flooded.
+      </li>
+      <li>
+        <strong>Flood Mask Generation:</strong><br />
+        Create binary raster masks for different rainfall scenarios; overlay with population and building layers to assess impact.
+      </li>
+    </ol>
+
+    <h2>4. Results &amp; Discussion</h2>
+    <p>
+      This analysis, based on recent historical rainfall data, serves as a diagnostic tool for understanding flood vulnerability in the basin.
+      However, the modular method can be adapted to accept real-time or projected rainfall values, making it a scalable prototype for flood forecasting
+      or adaptation planning under climate scenarios.
+    </p>
+
+    <h3>🌊 Key Findings</h3>
+    <ul>
+      <li>Urbanized and low-lying parts of the basin showed high vulnerability.</li>
+      <li>Runoff accumulation increases rapidly past ~100&nbsp;mm rainfall in some sub-basins.</li>
+      <li>Flood extent does not scale linearly with rainfall due to topographic thresholds.</li>
+    </ul>
+
+    <h3>📈 Infrastructure Impact</h3>
+    <ul>
+      <li>Count of buildings affected by floodwaters per scenario.</li>
+      <li>Map overlays show clustering of risk zones near dense settlements.</li>
+    </ul>
+
+    <h3>👥 Population Impact</h3>
+    <ul>
+      <li>Population raster clipped by flood masks.</li>
+      <li>Estimations of people exposed to pluvial flood risk under different scenarios.</li>
+    </ul>
+
+    <h2>🗺️ Maps to Include in the Portfolio</h2>
+    <ol>
+      <li><strong>Study Area Overview</strong><br /><span class="small">Mono River Basin with hillshade + river network</span></li>
+      <li><strong>Land Use Map</strong><br /><span class="small">Classified raster clipped to basin</span></li>
+      <li><strong>Runoff Coefficient Raster</strong><br /><span class="small">Gradient visualization of runoff potential</span></li>
+      <li><strong>Monthly Rainfall Maps</strong><br /><span class="small">One or two representative months (e.g., wettest + average)</span></li>
+      <li><strong>Flood Extent Map (per scenario)</strong><br /><span class="small">e.g., 50&nbsp;mm / 100&nbsp;mm / 200&nbsp;mm rainfall input</span></li>
+      <li><strong>Flooded Areas vs. Buildings</strong><br /><span class="small">Overlay buildings on flood mask (highlight affected)</span></li>
+      <li><strong>Flooded Areas vs. Population</strong><br /><span class="small">Population density + flood mask with counts in legend</span></li>
+      <li><strong>Result Summary Map</strong><br /><span class="small">Combined population + building impact heatmap</span></li>
+      <li><strong>Method Diagram (optional)</strong><br /><span class="small">Flowchart of the volume comparison steps</span></li>
+    </ol>
+
+    <p><a class="back-link" href="../index.html">← Back to Portfolio</a></p>
+  </main>
+</body>
+</html>
